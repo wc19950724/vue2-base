@@ -22,7 +22,7 @@
 
 develop 作为开发主分支，各开发人员自行基于 develop 检出新分支<br>命名规范为: `username`/`(dev|***)`
 
-> `wchao/dev`<br> > `wchao/feat`
+> `wchao/dev`<br>`wchao/feat`
 
 ## 运行
 

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "vue2 & element-ui 基础管理平台",
   "scripts": {
-    "start": "webpack --mode=development serve",
+    "start": "webpack serve --mode=development",
     "build": "webpack --mode=production",
     "fix": "pnpm lint && pnpm prettier",
     "lint": "eslint src/**/*.{vue,js,jsx} --fix",
