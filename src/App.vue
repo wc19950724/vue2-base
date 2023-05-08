@@ -1,5 +1,10 @@
 <template>
-  <section>{{ message }}</section>
+  <section>
+    <h1>{{ message }}</h1>
+    <router-link to="/index">home</router-link>
+    <router-link to="/table">table</router-link>
+    <router-view></router-view>
+  </section>
 </template>
 <script>
 export default {

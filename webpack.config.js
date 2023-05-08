@@ -21,6 +21,7 @@ const config = {
     client: {
       logging: "warn",
     },
+    historyApiFallback: true,
   },
   stats: {
     excludeModules: /node_modules/,
@@ -30,7 +31,7 @@ const config = {
     // 添加对 .vue 文件的解析
     extensions: [".js", ".jsx", ".vue"],
     alias: {
-      vue$: "vue/dist/vue.esm.js",
+      "@": path.resolve(__dirname, "src"),
     },
   },
   optimization: {
