@@ -18,7 +18,6 @@ const config = {
     path: path.resolve(__dirname, "dist"),
   },
   performance: {
-    hints: "warning",
     maxEntrypointSize: 1024 * 1024, // 244 KiB
     maxAssetSize: 244 * 1024, // 244 KiB
   },
@@ -148,8 +147,10 @@ module.exports = (env, { mode }) => {
   config.mode = mode;
   console.log(mode);
   if (mode === "production") {
+    config.performance.hints = "warning";
     config.plugins.push();
   } else if (mode === "development") {
+    config.performance.hints = false;
     config.devtool = "eval-cheap-module-source-map";
   }
   return config;
