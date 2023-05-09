@@ -4,6 +4,7 @@ const path = require("path");
 const { ProgressPlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const packageJson = require("./package.json");
 
@@ -11,8 +12,15 @@ const config = {
   entry: "./src/main.js",
   output: {
     clean: true,
-    filename: "js/[name].js",
+    chunkFilename: "js/[name].[contenthash].js",
+    filename: "js/[name].[contenthash].js",
+    assetModuleFilename: "[ext]/[name].[contenthash].[ext]",
     path: path.resolve(__dirname, "dist"),
+  },
+  performance: {
+    hints: "warning",
+    maxEntrypointSize: 1024 * 1024, // 244 KiB
+    maxAssetSize: 244 * 1024, // 244 KiB
   },
   devServer: {
     static: path.resolve(__dirname, "dist"),
@@ -35,15 +43,23 @@ const config = {
     },
   },
   optimization: {
-    splitChunks: {
-      chunks: "all",
-      filename: "js/[name]/[name].[contenthash].js",
-    },
+    minimizer: [
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            "default",
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
+        },
+      }),
+      "...",
+    ],
   },
   plugins: [
     new ProgressPlugin(),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       minify: false,
       template: "index.html",
@@ -53,6 +69,10 @@ const config = {
         description: packageJson.description,
         keywords: packageJson.keywords,
       },
+    }),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].[contenthash].css",
+      chunkFilename: "css/[name].[contenthash].css",
     }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -66,9 +86,19 @@ const config = {
       },
       {
         test: /\.(js|jsx)$/i,
+        exclude: /node_modules/,
         loader: "babel-loader",
         options: {
-          plugins: ["@babel/plugin-syntax-dynamic-import"],
+          plugins: [
+            "@babel/plugin-syntax-dynamic-import",
+            [
+              "component",
+              {
+                libraryName: "element-ui",
+                styleLibraryName: "theme-chalk",
+              },
+            ],
+          ],
           presets: [
             [
               "@babel/preset-env",
@@ -81,15 +111,26 @@ const config = {
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "style-loader", "css-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: { sourceMap: true, importLoaders: 1 },
+          },
+        ],
       },
       {
         test: /\.less$/i,
         use: [
           MiniCssExtractPlugin.loader,
-          "style-loader",
-          "css-loader",
-          "less-loader",
+          {
+            loader: "css-loader",
+            options: { sourceMap: true },
+          },
+          {
+            loader: "less-loader",
+            options: { sourceMap: true },
+          },
         ],
       },
       {

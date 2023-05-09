@@ -4,7 +4,7 @@
   "description": "vue2 & element-ui 基础管理平台",
   "scripts": {
     "start": "webpack serve --mode=development",
-    "build": "webpack --mode=production",
+    "build": "pnpm fix && webpack --mode=production",
     "fix": "pnpm lint && pnpm prettier",
     "lint": "eslint src/**/*.{vue,js,jsx} --fix",
     "prettier": "prettier src/**/*.{vue,js,jsx} --write"
@@ -20,7 +20,9 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.21.5",
     "babel-loader": "^9.1.2",
+    "babel-plugin-component": "^1.1.1",
     "css-loader": "^6.7.3",
+    "css-minimizer-webpack-plugin": "^5.0.0",
     "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -33,7 +35,6 @@
     "lint-staged": "^13.2.2",
     "mini-css-extract-plugin": "^2.7.5",
     "prettier": "^2.8.8",
-    "style-loader": "^3.3.2",
     "vue-eslint-parser": "^9.2.0",
     "vue-loader": "^15.10.1",
     "vue-template-compiler": "~2.6.14",
@@ -42,6 +43,7 @@
     "webpack-dev-server": "^4.13.3"
   },
   "dependencies": {
+    "element-ui": "^2.15.13",
     "vue": "~2.6.14",
     "vue-router": "~3.6.5"
   },

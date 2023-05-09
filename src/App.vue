@@ -3,6 +3,7 @@
     <h1>{{ message }}</h1>
     <router-link to="/index">home</router-link>
     <router-link to="/table">table</router-link>
+    <el-button>默认按钮</el-button>
     <router-view></router-view>
   </section>
 </template>
