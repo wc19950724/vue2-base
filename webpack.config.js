@@ -16,9 +16,10 @@ const config = {
     filename: "js/[name].[contenthash].js",
     assetModuleFilename: "[ext]/[name].[contenthash].[ext]",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
   performance: {
-    maxEntrypointSize: 1024 * 1024, // 244 KiB
+    maxEntrypointSize: 1024 * 1024, // 1 MiB
     maxAssetSize: 244 * 1024, // 244 KiB
   },
   devServer: {
@@ -36,7 +37,7 @@ const config = {
   },
   resolve: {
     // 添加对 .vue 文件的解析
-    extensions: [".js", ".jsx", ".vue"],
+    extensions: [".js", ".jsx", ".vue", ".less", ".css"],
     alias: {
       "@": path.resolve(__dirname, "src"),
     },

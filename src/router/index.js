@@ -1,16 +1,18 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-Vue.use(VueRouter);
+import Layout from "@/layout";
 
 import home from "./modules/home";
 import table from "./modules/table";
+
+Vue.use(VueRouter);
 
 const dynamicRoutes = [...home, ...table];
 const staticRoutes = [
   {
     path: "/",
-    name: "Index",
+    component: Layout,
     redirect: "/index",
   },
   {

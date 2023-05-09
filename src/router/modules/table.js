@@ -5,6 +5,6 @@ export default [
     meta: {
       title: "表格",
     },
-    component: () => import("@/pages/table/index.vue"),
+    component: () => import("@/pages/table"),
   },
 ];
