@@ -24,7 +24,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.eol": "\n",
   "files.exclude": {
-    ".vscode": false,
+    ".vscode": true,
     "*.lock": true,
     "pnpm-lock.yaml": true,
     "node_modules": true,

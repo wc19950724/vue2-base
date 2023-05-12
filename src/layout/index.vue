@@ -1,13 +1,13 @@
 <template>
   <el-container class="layout-wrapper">
-    <el-header>
+    <el-header class="layout-header">
       <LayoutHeader />
     </el-header>
     <el-container>
-      <el-aside>
+      <el-aside class="layout-aside" width="200px">
         <LayoutSideNav />
       </el-aside>
-      <el-main>
+      <el-main class="layout-main">
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -23,5 +23,22 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/styles/layout";
+.layout-wrapper {
+  width: 100%;
+  height: 100%;
+
+  .layout-header {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .layout-aside {
+    background-color: #333;
+    color: #fff;
+  }
+
+  .layout-main {
+    background-color: #fff;
+  }
+}
 </style>

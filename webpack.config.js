@@ -71,10 +71,6 @@ const config = {
         keywords: packageJson.keywords,
       },
     }),
-    new MiniCssExtractPlugin({
-      filename: "css/[name].[contenthash].css",
-      chunkFilename: "css/[name].[contenthash].css",
-    }),
     new AutoImportPlugin({
       entry: "./src",
       output: "./src/plugins/element-ui.js",
@@ -117,30 +113,6 @@ const config = {
         },
       },
       {
-        test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: { sourceMap: true, importLoaders: 1 },
-          },
-        ],
-      },
-      {
-        test: /\.less$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: { sourceMap: true },
-          },
-          {
-            loader: "less-loader",
-            options: { sourceMap: true },
-          },
-        ],
-      },
-      {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
@@ -156,8 +128,30 @@ module.exports = (env, { mode }) => {
   console.log(mode);
   if (mode === "production") {
     config.performance.hints = "warning";
-    config.plugins.push();
+    // 在生产模式下使用 MiniCssExtractPlugin
+    config.plugins.push(
+      new MiniCssExtractPlugin({
+        filename: "css/[name].[contenthash].css",
+        chunkFilename: "css/[name].[contenthash].css",
+      })
+    );
+    config.module.rules.push({
+      test: /\.css$/i,
+      use: [MiniCssExtractPlugin.loader, "css-loader"],
+    });
+    config.module.rules.push({
+      test: /\.less$/i,
+      use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
+    });
   } else if (mode === "development") {
+    config.module.rules.push({
+      test: /\.css$/i,
+      use: ["style-loader", "css-loader"],
+    });
+    config.module.rules.push({
+      test: /\.less$/i,
+      use: ["style-loader", "css-loader", "less-loader"],
+    });
     config.performance.hints = false;
     config.devtool = "eval-cheap-module-source-map";
   }
