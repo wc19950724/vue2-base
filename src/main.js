@@ -1,5 +1,6 @@
 import "element-ui/lib/theme-chalk";
 import "@/styles";
+import "@/plugins/element-ui";
 
 import Vue from "vue";
 

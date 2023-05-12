@@ -1,7 +1,11 @@
 <template>
   <section>
     <h1>home</h1>
-    <span>{{ count }}</span>
+    <span v-loading="true">{{ count }}</span>
+    <el-button v-loading></el-button>
+    <el-radio></el-radio>
+    <el-switch></el-switch>
+    <el-slider></el-slider>
   </section>
 </template>
 
@@ -11,6 +15,12 @@ export default {
     return {
       count: 12,
     };
+  },
+  methods: {
+    add() {
+      this.$message();
+      this.$notify();
+    },
   },
 };
 </script>

@@ -5,6 +5,7 @@ const { ProgressPlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const AutoImportPlugin = require("auto-import-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const packageJson = require("./package.json");
 
@@ -73,6 +74,12 @@ const config = {
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash].css",
       chunkFilename: "css/[name].[contenthash].css",
+    }),
+    new AutoImportPlugin({
+      entry: "./src",
+      output: "./src/plugins/element-ui.js",
+      resolvers: "element-ui",
+      logLevel: "none",
     }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/

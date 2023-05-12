@@ -15,13 +15,8 @@
 </template>
 
 <script>
-import { Aside, Container, Header, Main } from "element-ui";
 export default {
   components: {
-    ElAside: Aside,
-    ElContainer: Container,
-    ElHeader: Header,
-    ElMain: Main,
     LayoutSideNav: () => import("./components/side-nav"),
     LayoutHeader: () => import("./components/header"),
   },

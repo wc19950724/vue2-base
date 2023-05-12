@@ -21,6 +21,9 @@ devDependencies:
   '@babel/preset-env':
     specifier: ^7.21.5
     version: 7.21.5(@babel/core@7.21.8)
+  auto-import-webpack-plugin:
+    specifier: ^0.1.5
+    version: 0.1.5(webpack@5.82.0)
   babel-loader:
     specifier: ^9.1.2
     version: 9.1.2(@babel/core@7.21.8)(webpack@5.82.0)
@@ -1954,6 +1957,19 @@ packages:
     dependencies:
       babel-runtime: 6.26.0
     dev: false
+
+  /auto-import-webpack-plugin@0.1.5(webpack@5.82.0):
+    resolution: {integrity: sha512-mY9ecz7Z6NQzn4AKKxJFNFgFgr4daa/P/99PUsWXncX0j1cv1TMY875CEyF6jTQ0b/zpubLpX5vReHZTXdMe4g==}
+    hasBin: true
+    peerDependencies:
+      webpack: '>=5'
+    dependencies:
+      eslint: 8.40.0
+      prettier: 2.8.8
+      webpack: 5.82.0(webpack-cli@5.0.2)
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /babel-helper-vue-jsx-merge-props@2.0.3:
     resolution: {integrity: sha512-gsLiKK7Qrb7zYJNgiXKpXblxbV5ffSwR0f5whkPAaBAR4fhi6bwRZxX9wBlIc5M/v8CCkXUbXZL4N/nSE97cqg==}
