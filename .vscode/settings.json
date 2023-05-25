@@ -26,9 +26,8 @@
   "files.exclude": {
     ".vscode": true,
     "*.lock": true,
-    "pnpm-lock.yaml": true,
-    "node_modules": true,
     "LICENSE": true,
-    ".github": true
+    "node_modules": true,
+    "pnpm-lock.yaml": true
   }
 }
