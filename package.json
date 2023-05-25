@@ -8,7 +8,7 @@
     "fix": "pnpm lint && pnpm prettier",
     "lint": "eslint src/**/*.{vue,js,jsx} --fix",
     "prettier": "prettier src/**/*.{vue,js,jsx} --write",
-    "generator": "auto-import -e src -o src/plugins/element-ui.js"
+    "generator": "auto-import"
   },
   "keywords": [
     "vue2",
