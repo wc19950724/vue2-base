@@ -1,15 +1,16 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require("path");
-const { ProgressPlugin } = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const AutoImportPlugin = require("auto-import-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { AutoImportPlugin } = require("auto-import-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const packageJson = require("./package.json");
 
-const config = {
+module.exports = (env, { mode }) => ({
+  mode,
   entry: "./src/main.js",
   output: {
     clean: true,
@@ -17,9 +18,9 @@ const config = {
     filename: "js/[name].[contenthash].js",
     assetModuleFilename: "[ext]/[name].[contenthash].[ext]",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
   },
   performance: {
+    hints: mode === "development" ? false : "warning",
     maxEntrypointSize: 1024 * 1024, // 1 MiB
     maxAssetSize: 244 * 1024, // 244 KiB
   },
@@ -30,7 +31,6 @@ const config = {
     client: {
       logging: "warn",
     },
-    historyApiFallback: true,
   },
   stats: {
     excludeModules: /node_modules/,
@@ -43,23 +43,8 @@ const config = {
       "@": path.resolve(__dirname, "src"),
     },
   },
-  optimization: {
-    minimizer: [
-      new CssMinimizerPlugin({
-        minimizerOptions: {
-          preset: [
-            "default",
-            {
-              discardComments: { removeAll: true },
-            },
-          ],
-        },
-      }),
-      "...",
-    ],
-  },
   plugins: [
-    new ProgressPlugin(),
+    new webpack.ProgressPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       minify: false,
@@ -71,15 +56,26 @@ const config = {
         keywords: packageJson.keywords,
       },
     }),
+    mode === "production" &&
+      new MiniCssExtractPlugin({
+        filename: "css/[name].[contenthash].css",
+        chunkFilename: "css/[name].[contenthash].css",
+      }),
     new AutoImportPlugin({
       entry: "./src",
       output: "./src/plugins/element-ui.js",
-      resolvers: "element-ui",
-      logLevel: "none",
+      library: "element-ui",
     }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
+  optimization: {
+    minimizer: [
+      // 在 webpack@5 中，你可以使用 `...` 语法来扩展现有的 minimizer（即 `terser-webpack-plugin`），将下一行取消注释
+      "...",
+      mode === "production" && new CssMinimizerPlugin(),
+    ],
+  },
   module: {
     rules: [
       // 添加处理 .vue 文件的 loader 配置
@@ -113,6 +109,14 @@ const config = {
         },
       },
       {
+        test: /\.(css|less)$/i,
+        use: [
+          mode === "development" ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "less-loader",
+        ],
+      },
+      {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
@@ -121,39 +125,5 @@ const config = {
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
-};
-
-module.exports = (env, { mode }) => {
-  config.mode = mode;
-  console.log(mode);
-  if (mode === "production") {
-    config.performance.hints = "warning";
-    // 在生产模式下使用 MiniCssExtractPlugin
-    config.plugins.push(
-      new MiniCssExtractPlugin({
-        filename: "css/[name].[contenthash].css",
-        chunkFilename: "css/[name].[contenthash].css",
-      })
-    );
-    config.module.rules.push({
-      test: /\.css$/i,
-      use: [MiniCssExtractPlugin.loader, "css-loader"],
-    });
-    config.module.rules.push({
-      test: /\.less$/i,
-      use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
-    });
-  } else if (mode === "development") {
-    config.module.rules.push({
-      test: /\.css$/i,
-      use: ["style-loader", "css-loader"],
-    });
-    config.module.rules.push({
-      test: /\.less$/i,
-      use: ["style-loader", "css-loader", "less-loader"],
-    });
-    config.performance.hints = false;
-    config.devtool = "eval-cheap-module-source-map";
-  }
-  return config;
-};
+  devtool: mode === "development" && "eval-cheap-module-source-map",
+});

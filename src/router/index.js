@@ -25,7 +25,7 @@ const staticRoutes = [
 const routes = [...dynamicRoutes, ...staticRoutes];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   routes,
   scrollBehavior(to) {
     if (to.hash) {
