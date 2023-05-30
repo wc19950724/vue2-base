@@ -20,7 +20,7 @@ module.exports = (env, { mode }) => ({
     path: path.resolve(__dirname, "dist"),
   },
   performance: {
-    hints: mode === "development" ? false : "warning",
+    hints: mode === "production" && "warning",
     maxEntrypointSize: 1024 * 1024, // 1 MiB
     maxAssetSize: 244 * 1024, // 244 KiB
   },
