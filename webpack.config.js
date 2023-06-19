@@ -65,6 +65,7 @@ module.exports = (env, { mode }) => ({
       entry: "./src",
       output: "./src/plugins/element-ui.js",
       library: "element-ui",
+      logLevel: false,
     }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/

@@ -7,8 +7,7 @@
     "build": "webpack --mode=production",
     "fix": "pnpm lint && pnpm prettier",
     "lint": "eslint src/**/*.{vue,js,jsx} --fix",
-    "prettier": "prettier src/**/*.{vue,js,jsx} --write",
-    "generator": "auto-import"
+    "prettier": "prettier src/**/*.{vue,js,jsx} --write"
   },
   "keywords": [
     "vue2",
