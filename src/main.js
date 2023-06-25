@@ -4,8 +4,12 @@ import "@/plugins/element-ui";
 
 import Vue from "vue";
 
+import Tag from "@/components/tag";
+
 import App from "./App";
 import router from "./router";
+
+Vue.component(Tag.name, Tag);
 
 Vue.config.errorHandler = function (err) {
   console.log("Oops, An exception occurred: ");

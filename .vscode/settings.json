@@ -27,7 +27,7 @@
     ".vscode": true,
     "*.lock": true,
     "LICENSE": true,
-    "node_modules": true,
+    "node_modules": false,
     "pnpm-lock.yaml": true
   }
 }
